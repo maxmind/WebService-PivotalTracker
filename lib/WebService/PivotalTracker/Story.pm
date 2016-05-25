@@ -8,13 +8,14 @@ our $VERSION = '0.01';
 
 use Params::CheckCompiler qw( compile );
 use WebService::PivotalTracker::Comment;
+use WebService::PivotalTracker::PropertyAttributes;
 use WebService::PivotalTracker::Types
-    qw( ArrayRef CommentObject DateTimeObject NonEmptyStr PositiveInt Str StoryState StoryType );
-use WebService::PivotalTracker::Util;
+    qw( ArrayRef CommentObject DateTimeObject NonEmptyStr Num
+        PositiveInt Str StoryState StoryType Uri );
 
 use Moo;
 
-props_to_attributes(
+has( @{$_} ) for props_to_attributes(
     id              => PositiveInt,
     project_id      => PositiveInt,
     name            => NonEmptyStr,
@@ -48,12 +49,14 @@ has comments => (
     builder  => '_build_comments',
 );
 
-with 'WebService::PivotalTracker::HasClient';
+with 'WebService::PivotalTracker::Entity';
 
 # We could fetch each id in $self->comment_ids one at a time, but there's an
 # endpoint to get all the comments at once, which is going to be more
 # efficient.
 sub _build_comments {
+    my $self = shift;
+
     my $raw_comments = $self->_client->get( $self->_comments_uri );
 
     return [

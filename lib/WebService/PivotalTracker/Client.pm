@@ -10,13 +10,13 @@ use Cpanel::JSON::XS qw( decode_json encode_json );
 use HTTP::Request;
 use LWP::UserAgent;
 use URI;
-use WebService::PivotalTracker::Types qw( MD5 Uri );
+use WebService::PivotalTracker::Types qw( MD5Hex Uri );
 
 use Moo;
 
 has token => (
     is       => 'ro',
-    isa      => MD5,
+    isa      => MD5Hex,
     required => 1,
 );
 

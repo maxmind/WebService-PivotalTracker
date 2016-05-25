@@ -7,13 +7,13 @@ use namespace::autoclean;
 our $VERSION = '0.01';
 
 use Params::CheckCompiler qw( compile );
+use WebService::PivotalTracker::PropertyAttributes;
 use WebService::PivotalTracker::Types
     qw( ArrayRef DateTimeObject Maybe NonEmptyStr PositiveInt );
-use WebService::PivotalTracker::Util;
 
 use Moo;
 
-props_to_attributes(
+has( @{$_} ) for props_to_attributes(
     id                    => PositiveInt,
     story_id              => Maybe [PositiveInt],
     epic_id               => Maybe [PositiveInt],
@@ -28,6 +28,6 @@ props_to_attributes(
     kind                  => NonEmptyStr,
 );
 
-with 'WebService::PivotalTracker::HasClient';
+with 'WebService::PivotalTracker::Entity';
 
 1;

@@ -8,10 +8,12 @@ our $VERSION = '0.01';
 use Type::Library
     -base,
     -declare =>
-    qw( ClientObject CommentObject DateTimeObject MD5 StoryState StoryType );
-use Type::Utils qw( class_type declare enum );
+    qw( ClientObject CommentObject DateTimeObject MD5Hex StoryState StoryType );
+use Type::Utils -all;
 use Types::Common::Numeric;
+use Types::Common::String;
 use Types::Standard -types;
+use Types::URI;
 
 BEGIN {
     extends qw(
@@ -28,10 +30,10 @@ class_type CommentObject, { class => 'WebService::PivotalTracker::Comment' };
 
 class_type DateTimeObject, { class => 'DateTime' };
 
-declare MD5,
+declare MD5Hex,
     as Str,
     where {m/^[0-9a-f]{32}$/i},
-    inline { $_[0] . '=~ m/^[0-9a-f]{32}$/i' };
+    inline_as { $_[1] . ' =~ m/^[0-9a-f]{32}$/i' };
 
 enum StoryState, [
     qw(

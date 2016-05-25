@@ -9,13 +9,13 @@ our $VERSION = '0.01';
 use Params::CheckCompiler qw( compile );
 use WebService::PivotalTracker::Client;
 use WebService::PivotalTracker::Story;
-use WebService::PivotalTracker::Types qw( MD5 Uri );
+use WebService::PivotalTracker::Types qw( ClientObject MD5Hex NonEmptyStr PositiveInt Uri );
 
 use Moo;
 
 has token => (
     is       => 'ro',
-    isa      => MD5,
+    isa      => MD5Hex,
     required => 1,
 );
 

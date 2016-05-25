@@ -6,13 +6,13 @@ use namespace::autoclean;
 
 our $VERSION = '0.01';
 
-use WebService::PivotalTracker::Types qw( ClientObject HashRef MD5 Uri );
+use WebService::PivotalTracker::Types qw( ClientObject HashRef MD5Hex Uri );
 
 use Moo::Role;
 
 has token => (
     is       => 'ro',
-    isa      => MD5,
+    isa      => MD5Hex,
     required => 1,
 );
 
