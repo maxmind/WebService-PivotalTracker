@@ -15,9 +15,10 @@ use Moo::Role;
 
 requires '_self_uri';
 
-has client => (
+has _client => (
     is       => 'ro',
     isa      => ClientObject,
+    init_arg => 'client',
     required => 1,
 );
 

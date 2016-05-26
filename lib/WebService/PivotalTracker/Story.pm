@@ -138,7 +138,7 @@ sub _build_labels {
                     raw_content => $_,
                     client      => $self->_client,
                     )
-            } $self->raw_content->{labels}
+            } @{ $self->raw_content->{labels} }
         ];
     }
 
