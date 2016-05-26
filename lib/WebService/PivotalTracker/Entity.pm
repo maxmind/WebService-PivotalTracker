@@ -28,6 +28,8 @@ has raw_content => (
     required => 1,
 );
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
+
 # The PT docs specify ISO8601 but the examples all seem to be RFC3339
 # compliant.
 sub _inflate_iso8601_datetime {
@@ -45,5 +47,7 @@ sub _refresh_raw_content {
 
     return;
 }
+
+## use critic
 
 1;

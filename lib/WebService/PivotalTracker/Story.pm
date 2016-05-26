@@ -51,7 +51,7 @@ has( @{$_} ) for props_to_attributes(
         type     => DateTimeObject,
         inflator => '_inflate_iso8601_datetime',
     },
-    url            => {
+    url => {
         type     => Uri,
         inflator => '_inflate_uri',
     },
@@ -166,13 +166,15 @@ sub _labels_uri {
     return $self->_client->build_uri($path);
 }
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _self_uri {
     my $self = shift;
 
     return sprintf(
-        "/stories/%s",
+        '/stories/%s',
         $self->id,
     );
 }
+## use critic
 
 1;

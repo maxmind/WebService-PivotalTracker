@@ -34,10 +34,12 @@ has( @{$_} ) for props_to_attributes(
 
 with 'WebService::PivotalTracker::Entity';
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _self_uri {
     my $self = shift;
 
-    return sprintf( "/projects/%s/labels/%s", $self->project_id, $self->id );
+    return sprintf( '/projects/%s/labels/%s', $self->project_id, $self->id );
 }
+## use critic
 
 1;

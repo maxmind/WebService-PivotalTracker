@@ -36,15 +36,17 @@ has( @{$_} ) for props_to_attributes(
 
 with 'WebService::PivotalTracker::Entity';
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _self_uri {
     my $self = shift;
 
     return sprintf(
-        "/projects/%s/stories/%s/comments/%s",
+        '/projects/%s/stories/%s/comments/%s',
         $self->project_id,
         $self->story_id,
         $self->id,
     );
 }
+## use critic
 
 1;
