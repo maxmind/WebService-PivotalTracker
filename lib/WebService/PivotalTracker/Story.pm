@@ -64,6 +64,7 @@ has comments => (
     init_arg => undef,
     lazy     => 1,
     builder  => '_build_comments',
+    clearer  => '_clear_comments',
 );
 
 has labels => (
@@ -118,11 +119,14 @@ sub _comments_uri {
         my $self = shift;
         my %args = $check->(@_);
 
-        return WebService::PivotalTracker::Comment->new(
+        my $comment = WebService::PivotalTracker::Comment->new(
             raw_content =>
                 $self->_client->post( $self->_comments_uri, \%args ),
             client => $self->_client,
         );
+        $self->_clear_comments;
+
+        return $comment;
     }
 }
 
