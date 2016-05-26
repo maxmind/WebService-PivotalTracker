@@ -6,22 +6,14 @@ use namespace::autoclean;
 
 our $VERSION = '0.01';
 
-use WebService::PivotalTracker::Types qw( ClientObject HashRef MD5Hex Uri );
+use DateTime::Format::RFC3339;
+use URI;
+
+use WebService::PivotalTracker::Types qw( ClientObject HashRef );
 
 use Moo::Role;
 
-has token => (
-    is       => 'ro',
-    isa      => MD5Hex,
-    required => 1,
-);
-
-has base_uri => (
-    is      => 'ro',
-    isa     => Uri,
-    coerce  => 1,
-    default => 'https://www.pivotaltracker.com/services/v5/',
-);
+requires '_self_uri';
 
 has client => (
     is       => 'ro',
@@ -30,9 +22,28 @@ has client => (
 );
 
 has raw_content => (
-    is       => 'ro',
+    is       => 'rw',
+    writer   => '_set_raw_content',
     isa      => HashRef,
     required => 1,
 );
+
+# The PT docs specify ISO8601 but the examples all seem to be RFC3339
+# compliant.
+sub _inflate_iso8601_datetime {
+    return DateTime::Format::RFC3339->parse_datetime( $_[1] );
+}
+
+sub _inflate_uri {
+    return URI->new( $_[1] );
+}
+
+sub _refresh_raw_content {
+    my $self = shift;
+
+    $self->_set_raw_content( $self->_client->get( $self->_self_uri ) );
+
+    return;
+}
 
 1;

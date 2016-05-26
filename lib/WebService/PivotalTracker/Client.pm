@@ -10,7 +10,7 @@ use Cpanel::JSON::XS qw( decode_json encode_json );
 use HTTP::Request;
 use LWP::UserAgent;
 use URI;
-use WebService::PivotalTracker::Types qw( MD5Hex Uri );
+use WebService::PivotalTracker::Types qw( LWPObject MD5Hex Uri );
 
 use Moo;
 
@@ -25,6 +25,14 @@ has base_uri => (
     isa     => Uri,
     coerce  => 1,
     default => 'https://www.pivotaltracker.com/services/v5/',
+);
+
+has _ua => (
+    is       => 'ro',
+    isa      => LWPObject,
+    init_arg => 'ua',
+    lazy     => 1,
+    default  => sub { LWP::UserAgent->new },
 );
 
 sub build_uri {

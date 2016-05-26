@@ -7,8 +7,10 @@ our $VERSION = '0.01';
 
 use Type::Library
     -base,
-    -declare =>
-    qw( ClientObject CommentObject DateTimeObject MD5Hex StoryState StoryType );
+    -declare => qw(
+    ClientObject CommentObject DateTimeObject LabelObject
+    LWPObject MD5Hex StoryState StoryType
+);
 use Type::Utils -all;
 use Types::Common::Numeric;
 use Types::Common::String;
@@ -29,6 +31,10 @@ class_type ClientObject, { class => 'WebService::PivotalTracker::Client' };
 class_type CommentObject, { class => 'WebService::PivotalTracker::Comment' };
 
 class_type DateTimeObject, { class => 'DateTime' };
+
+class_type LabelObject, { class => 'WebService::PivotalTracker::Label' };
+
+class_type LWPObject, { class => 'LWP::UserAgent' };
 
 declare MD5Hex,
     as Str,

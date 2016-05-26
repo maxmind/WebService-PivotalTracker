@@ -9,7 +9,8 @@ our $VERSION = '0.01';
 use Params::CheckCompiler qw( compile );
 use WebService::PivotalTracker::Client;
 use WebService::PivotalTracker::Story;
-use WebService::PivotalTracker::Types qw( ClientObject MD5Hex NonEmptyStr PositiveInt Uri );
+use WebService::PivotalTracker::Types
+    qw( ClientObject LWPObject MD5Hex NonEmptyStr PositiveInt Uri );
 
 use Moo;
 
@@ -26,7 +27,14 @@ has base_uri => (
     default => 'https://www.pivotaltracker.com/services/v5/',
 );
 
-has client => (
+has _ua => (
+    is        => 'ro',
+    isa       => LWPObject,
+    init_arg  => 'ua',
+    predicate => '_has_ua',
+);
+
+has _client => (
     is      => 'ro',
     isa     => ClientObject,
     lazy    => 1,
@@ -78,7 +86,7 @@ has client => (
 
         WebService::PivotalTracker::Story->new(
             raw_content => $self->_client->get(
-                $self->_client->extend_uri("/stories/$args{story_id}"),
+                $self->_client->build_uri("/stories/$args{story_id}"),
             ),
             client => $self->_client,
         );
@@ -91,6 +99,7 @@ sub _build_client {
     return WebService::PivotalTracker::Client->new(
         token    => $self->token,
         base_uri => $self->base_uri,
+        ( $self->_has_ua ? ( ua => $self->_ua ) : () ),
     );
 }
 

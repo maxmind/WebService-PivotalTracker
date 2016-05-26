@@ -14,20 +14,37 @@ use WebService::PivotalTracker::Types
 use Moo;
 
 has( @{$_} ) for props_to_attributes(
-    id                    => PositiveInt,
-    story_id              => Maybe [PositiveInt],
-    epic_id               => Maybe [PositiveInt],
-    text                  => NonEmptyStr,
-    person_id             => PositiveInt,
-    created_at            => [ _inflate_datetime => DateTimeObject ],
-    updated_at            => [ _inflate_datetime => DateTimeObject ],
+    id         => PositiveInt,
+    story_id   => Maybe [PositiveInt],
+    epic_id    => Maybe [PositiveInt],
+    text       => NonEmptyStr,
+    person_id  => PositiveInt,
+    created_at => {
+        type     => DateTimeObject,
+        inflator => '_inflate_iso8601_datetime',
+    },
+    updated_at => {
+        type     => DateTimeObject,
+        inflator => '_inflate_iso8601_datetime',
+    },
     file_attachment_ids   => ArrayRef [PositiveInt],
     google_attachment_ids => ArrayRef [PositiveInt],
-    commit_identifier     => Maybe [NonEmptyStr],
-    commit_type           => Maybe [NonEmptyStr],
+    commit_identifier     => Maybe    [NonEmptyStr],
+    commit_type           => Maybe    [NonEmptyStr],
     kind                  => NonEmptyStr,
 );
 
 with 'WebService::PivotalTracker::Entity';
+
+sub _self_uri {
+    my $self = shift;
+
+    return sprintf(
+        "/projects/%s/stories/%s/comments/%s",
+        $self->project_id,
+        $self->story_id,
+        $self->id,
+    );
+}
 
 1;
