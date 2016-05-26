@@ -104,3 +104,5 @@ sub _build_client {
 }
 
 1;
+
+# ABSTRACT: Perl library for the Pivotal Tracker REST API
