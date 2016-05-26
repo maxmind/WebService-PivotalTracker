@@ -8,6 +8,7 @@ our $VERSION = '0.01';
 
 use Params::CheckCompiler qw( compile );
 use WebService::PivotalTracker::Client;
+use WebService::PivotalTracker::Me;
 use WebService::PivotalTracker::Story;
 use WebService::PivotalTracker::Types
     qw( ClientObject LWPObject MD5Hex NonEmptyStr PositiveInt Uri );
@@ -91,6 +92,16 @@ has _client => (
             client => $self->_client,
         );
     }
+}
+
+sub me {
+    my $self = shift;
+
+    return WebService::PivotalTracker::Me->new(
+        raw_content =>
+            $self->_client->get( $self->_client->build_uri('/me') ),
+        client => $self->_client,
+    );
 }
 
 sub _build_client {
