@@ -36,8 +36,10 @@ has( @{$_} ) for props_to_attributes(
 
 with 'WebService::PivotalTracker::Entity';
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _self_uri {
     die 'Me has no uri';
 }
+## use critic
 
 1;
