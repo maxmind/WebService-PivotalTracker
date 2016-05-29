@@ -39,7 +39,9 @@ class_type LWPObject, { class => 'LWP::UserAgent' };
 declare MD5Hex,
     as Str,
     where {m/^[0-9a-f]{32}$/i},
-    inline_as { $_[1] . ' =~ m/^[0-9a-f]{32}$/i' };
+    inline_as {
+    $_[0]->parent->inline_check( $_[1] ) . " && $_[1] =~ m/^[0-9a-f]{32}\$/i"
+    };
 
 enum StoryState, [
     qw(
