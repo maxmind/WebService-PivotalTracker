@@ -1,5 +1,11 @@
 {{$NEXT}}
 
+- Added Story->add_label method.
+
+- Fixed warning from too many sprintf arguments. Reported by Slaven
+  Resiz. GitHub #1.
+
+
 0.01     2016-05-26
 
 - First release upon an unsuspecting world.
