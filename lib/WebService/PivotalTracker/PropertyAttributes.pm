@@ -49,7 +49,7 @@ EOF
     }
 
     if ( $prop->{inflator} ) {
-        $default .= sprintf( <<'EOF', $prop->{inflator}, $name );
+        $default .= sprintf( <<'EOF', $prop->{inflator} );
 return unless defined $val;
 return $_[0]->%s( $val );
 EOF
