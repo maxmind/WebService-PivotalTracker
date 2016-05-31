@@ -101,8 +101,11 @@ with 'WebService::PivotalTracker::Entity';
 {
     my $check = compile(
         params => {
-            person_id => { type => PositiveInt },
-            text      => { type => NonEmptyStr },
+            person_id => {
+                type     => PositiveInt,
+                optional => 1,
+            },
+            text => { type => NonEmptyStr },
         }
     );
 
