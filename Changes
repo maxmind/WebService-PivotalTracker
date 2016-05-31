@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.03     2016-05-31
+
 - Made the person_id parameter to Story->add_comment optional. By default, the
   person is determined from the token used to submit the comment.
 
