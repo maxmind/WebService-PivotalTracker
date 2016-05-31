@@ -40,11 +40,13 @@ with 'WebService::PivotalTracker::Entity';
 sub _self_uri {
     my $self = shift;
 
-    return sprintf(
-        '/projects/%s/stories/%s/comments/%s',
-        $self->project_id,
-        $self->story_id,
-        $self->id,
+    return $self->_client->build_uri(
+        sprintf(
+            '/projects/%s/stories/%s/comments/%s',
+            $self->project_id,
+            $self->story_id,
+            $self->id,
+        )
     );
 }
 ## use critic

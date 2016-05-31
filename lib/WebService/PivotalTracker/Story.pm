@@ -222,15 +222,15 @@ sub _labels_uri {
     return $self->_client->build_uri($path);
 }
 
-## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _self_uri {
     my $self = shift;
 
-    return sprintf(
-        '/stories/%s',
-        $self->id,
+    return $self->_client->build_uri(
+        sprintf(
+            '/stories/%s',
+            $self->id,
+        )
     );
 }
-## use critic
 
 1;
