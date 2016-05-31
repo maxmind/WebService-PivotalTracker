@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.02     2016-05-31
+
 - Added Story->add_label method.
 
 - Fixed warning from too many sprintf arguments. Reported by Slaven
