@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Params::CheckCompiler qw( compile );
 use WebService::PivotalTracker::Comment;
