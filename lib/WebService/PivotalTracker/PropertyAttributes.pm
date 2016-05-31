@@ -65,6 +65,7 @@ EOF
         init_arg => undef,
         lazy     => 1,
         default  => quote_sub( $subname, $default, \%env ),
+        clearer  => '_clear_' . $name,
     );
 }
 

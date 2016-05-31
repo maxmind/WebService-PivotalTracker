@@ -73,9 +73,53 @@ has labels => (
     init_arg => undef,
     lazy     => 1,
     builder  => '_build_labels',
+    clearer  => '_clear_labels',
 );
 
 with 'WebService::PivotalTracker::Entity';
+
+{
+    my $check = compile(
+        params => {
+            current_state => { type => StoryState },
+        }
+    );
+
+    sub update {
+        my $self = shift;
+        my %args = $check->(@_);
+
+        my $raw = $self->_client->put( $self->_self_uri, \%args );
+
+        return ( ref $self )->new(
+            raw_content => $raw,
+            client      => $self->_client,
+        );
+    }
+}
+
+{
+    my $check = compile(
+        params => {
+            person_id => { type => PositiveInt },
+            text      => { type => NonEmptyStr },
+        }
+    );
+
+    sub add_comment {
+        my $self = shift;
+        my %args = $check->(@_);
+
+        my $comment = WebService::PivotalTracker::Comment->new(
+            raw_content =>
+                $self->_client->post( $self->_comments_uri, \%args ),
+            client => $self->_client,
+        );
+        $self->_clear_comments;
+
+        return $comment;
+    }
+}
 
 # We could fetch each id in $self->comment_ids one at a time, but there's an
 # endpoint to get all the comments at once, which is going to be more
@@ -107,28 +151,33 @@ sub _comments_uri {
     return $self->_client->build_uri($path);
 }
 
+before _clear_comments => sub {
+    my $self = shift;
+    delete $self->raw_content->{comments};
+};
+
 {
     my $check = compile(
         params => {
-            person_id => { type => PositiveInt },
-            text      => { type => NonEmptyStr },
+            name => { type => NonEmptyStr },
         }
     );
 
-    sub add_comment {
+    sub add_label {
         my $self = shift;
         my %args = $check->(@_);
 
-        my $comment = WebService::PivotalTracker::Comment->new(
-            raw_content =>
-                $self->_client->post( $self->_comments_uri, \%args ),
-            client => $self->_client,
-        );
-        $self->_clear_comments;
+        $self->_client->post( $self->_labels_uri, \%args );
+        $self->_clear_labels;
 
-        return $comment;
+        return;
     }
 }
+
+before _clear_labels => sub {
+    my $self = shift;
+    delete $self->raw_content->{labels};
+};
 
 # We might already have all the label info, otherwise we can fetch all the
 # labels at once rather iterating over each id, just like with comments.
