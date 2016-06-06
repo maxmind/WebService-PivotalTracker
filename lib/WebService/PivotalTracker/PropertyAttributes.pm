@@ -32,7 +32,7 @@ sub _attr_for {
     my %env;
     if ( $prop->{may_require_refresh} ) {
         $default .= sprintf( <<'EOF', $name );
-$_[0]->_refresh_raw_content unless exists $_[0]->raw_content(%s);
+$_[0]->_refresh_raw_content unless exists $_[0]->raw_content->{%s};
 EOF
     }
 
