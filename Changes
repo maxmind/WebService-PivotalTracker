@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Fixed typo in attribute creation that caused compilation failures with
+  Moo 2.002_000. Reported by andk. GitHub #2.
+
+
 0.03     2016-05-31
 
 - Made the person_id parameter to Story->add_comment optional. By default, the
