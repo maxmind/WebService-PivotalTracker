@@ -21,10 +21,9 @@ has token => (
 );
 
 has base_uri => (
-    is      => 'ro',
-    isa     => Uri,
-    coerce  => 1,
-    default => 'https://www.pivotaltracker.com/services/v5/',
+    is       => 'ro',
+    isa      => Uri,
+    required => 1,
 );
 
 has _ua => (
