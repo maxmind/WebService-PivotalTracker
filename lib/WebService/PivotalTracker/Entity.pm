@@ -9,17 +9,18 @@ our $VERSION = '0.04';
 use DateTime::Format::RFC3339;
 use URI;
 
-use WebService::PivotalTracker::Types qw( ClientObject HashRef );
+use WebService::PivotalTracker::Types qw( ClientObject HashRef PTAPIObject );
 
 use Moo::Role;
 
 requires '_self_uri';
 
-has _client => (
+has _pt_api => (
     is       => 'ro',
-    isa      => ClientObject,
-    init_arg => 'client',
+    isa      => PTAPIObject,
+    init_arg => 'pt_api',
     required => 1,
+    handles  => ['_client'],
 );
 
 has raw_content => (

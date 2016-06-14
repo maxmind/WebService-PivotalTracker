@@ -3,6 +3,10 @@
 - Fixed typo in attribute creation that caused compilation failures with
   Moo 2.002_000. Reported by andk. GitHub #2.
 
+- Added new classes for Project and ProjectIteration.
+
+- Added WS::PT->projects, ->project_iterations, and ->create_story.
+
 
 0.03     2016-05-31
 

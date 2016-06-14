@@ -17,7 +17,7 @@ use WebService::PivotalTracker::Types qw(
 
 use Moo;
 
-has( @{$_} ) for props_to_attributes(
+my %props = (
     id            => PositiveInt,
     project_id    => PositiveInt,
     name          => NonEmptyStr,
@@ -58,6 +58,8 @@ has( @{$_} ) for props_to_attributes(
     kind => NonEmptyStr,
 );
 
+has( @{$_} ) for props_to_attributes(%props);
+
 has comments => (
     is       => 'ro',
     isa      => ArrayRef [CommentObject],
@@ -78,6 +80,12 @@ has labels => (
 
 with 'WebService::PivotalTracker::Entity';
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
+sub _properties {
+    return %props;
+}
+## use critic
+
 {
     my $check = compile(
         params => {
@@ -93,7 +101,7 @@ with 'WebService::PivotalTracker::Entity';
 
         return ( ref $self )->new(
             raw_content => $raw,
-            client      => $self->_client,
+            pt_api      => $self->_pt_api,
         );
     }
 }
@@ -116,7 +124,7 @@ with 'WebService::PivotalTracker::Entity';
         my $comment = WebService::PivotalTracker::Comment->new(
             raw_content =>
                 $self->_client->post( $self->_comments_uri, \%args ),
-            client => $self->_client,
+            pt_api => $self->_pt_api,
         );
         $self->_clear_comments;
 
@@ -136,7 +144,7 @@ sub _build_comments {
         map {
             WebService::PivotalTracker::Comment->new(
                 raw_content => $_,
-                client      => $self->_client,
+                pt_api      => $self->_pt_api,
                 )
         } @{$raw_comments}
     ];
@@ -192,7 +200,7 @@ sub _build_labels {
             map {
                 WebService::PivotalTracker::Label->new(
                     raw_content => $_,
-                    client      => $self->_client,
+                    pt_api      => $self->_pt_api,
                     )
             } @{ $self->raw_content->{labels} }
         ];
@@ -204,7 +212,7 @@ sub _build_labels {
         map {
             WebService::PivotalTracker::Label->new(
                 raw_content => $_,
-                client      => $self->_client,
+                pt_api      => $self->_pt_api,
                 )
         } @{$raw_labels}
     ];

@@ -6,12 +6,16 @@ use namespace::autoclean;
 
 our $VERSION = '0.04';
 
+use DateTime::Format::RFC3339;
 use Params::CheckCompiler qw( compile );
+use Scalar::Util qw( blessed );
 use WebService::PivotalTracker::Client;
 use WebService::PivotalTracker::Me;
+use WebService::PivotalTracker::Project;
+use WebService::PivotalTracker::ProjectIteration;
 use WebService::PivotalTracker::Story;
 use WebService::PivotalTracker::Types
-    qw( ClientObject LWPObject MD5Hex NonEmptyStr PositiveInt Uri );
+    qw( ArrayRef ClientObject IterationScope LWPObject MD5Hex NonEmptyStr PositiveInt Uri );
 
 use Moo;
 
@@ -42,6 +46,21 @@ has _client => (
     builder => '_build_client',
 );
 
+sub projects {
+    my $self = shift;
+
+    my $uri = $self->_client->build_uri('/projects');
+
+    return [
+        map {
+            WebService::PivotalTracker::Project->new(
+                raw_content => $_,
+                pt_api      => $self,
+                )
+        } @{ $self->_client->get($uri) }
+    ];
+}
+
 {
     my $check = compile(
         params => {
@@ -62,14 +81,13 @@ has _client => (
             \%args,
         );
 
-        my $stories = $self->_client->get($uri);
         return [
             map {
                 WebService::PivotalTracker::Story->new(
                     raw_content => $_,
-                    client      => $self->_client,
+                    pt_api      => $self,
                     )
-            } @{$stories}
+            } @{ $self->_client->get($uri) }
         ];
     }
 }
@@ -89,7 +107,106 @@ has _client => (
             raw_content => $self->_client->get(
                 $self->_client->build_uri("/stories/$args{story_id}"),
             ),
-            client => $self->_client,
+            pt_api => $self,
+        );
+    }
+}
+
+{
+    my $check = compile(
+        params => {
+            project_id => PositiveInt,
+            label      => {
+                type     => NonEmptyStr,
+                optional => 1
+            },
+            limit => {
+                type    => PositiveInt,
+                default => 1,
+            },
+            offset => {
+                type     => PositiveInt,
+                optional => 1,
+            },
+            scope => {
+                type     => IterationScope,
+                optional => 1
+            },
+        },
+    );
+
+    sub project_iterations {
+        my $self = shift;
+        my %args = $check->(@_);
+
+        my $uri = $self->_client->build_uri(
+            "/projects/$args{project_id}/iterations",
+            \%args,
+        );
+
+        return [
+            map {
+                WebService::PivotalTracker::ProjectIteration->new(
+                    raw_content => $_,
+                    pt_api      => $self,
+                    )
+            } @{ $self->_client->get($uri) }
+        ];
+    }
+}
+
+# XXX - if we want to add more create_X methods we should find a way to
+# streamline & simplify this code so we don't have to repeat this sort of
+# boilerplate over and over. Maybe each entity class should provide more
+# detail about the properties, including type, coercions (like DateTime ->
+# RFC3339 string), required for create/update, etc.
+{
+    ## no critic (Subroutines::ProtectPrivateSubs)
+    my %props  = WebService::PivotalTracker::Story->_properties;
+    my %params = map {
+        $_ => blessed $props{$_}
+            ? { type => $props{$_} }
+            : { type => $props{$_}{type} }
+    } keys %props;
+
+    my %required = map { $_ => 1 } qw( project_id name );
+    $params{$_}{optional} = 1 for grep { !$required{$_} } keys %props;
+
+    %params = (
+        %params,
+        before_id => {
+            type     => PositiveInt,
+            optional => 1,
+        },
+        after_id => {
+            type     => PositiveInt,
+            optional => 1,
+        },
+        labels => {
+            type => ArrayRef [NonEmptyStr],
+            optional => 1
+        },
+    );
+
+    my $check = compile(
+        params => \%params,
+    );
+
+    sub create_story {
+        my $self = shift;
+        my %args = $check->(@_);
+
+        $self->_deflate_datetime_values( \%args );
+
+        my $project_id  = delete $args{project_id};
+        my $raw_content = $self->_client->post(
+            $self->_client->build_uri("/projects/$project_id/stories"),
+            \%args,
+        );
+
+        return WebService::PivotalTracker::Story->new(
+            raw_content => $raw_content,
+            pt_api      => $self,
         );
     }
 }
@@ -100,7 +217,7 @@ sub me {
     return WebService::PivotalTracker::Me->new(
         raw_content =>
             $self->_client->get( $self->_client->build_uri('/me') ),
-        client => $self->_client,
+        pt_api => $self,
     );
 }
 
@@ -112,6 +229,19 @@ sub _build_client {
         base_uri => $self->base_uri,
         ( $self->_has_ua ? ( ua => $self->_ua ) : () ),
     );
+}
+
+sub _deflate_datetime_values {
+    my $self = shift;
+    my $args = shift;
+
+    for my $key ( keys %{$args} ) {
+        next unless blessed $args->{$key} && $args->{$key}->isa('DateTime');
+        $args->{$key}
+            = DateTime::Format::RFC3339->format_datetime( $args->{$key} );
+    }
+
+    return;
 }
 
 1;

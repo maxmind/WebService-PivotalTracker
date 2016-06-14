@@ -8,8 +8,18 @@ our $VERSION = '0.04';
 use Type::Library
     -base,
     -declare => qw(
-    ClientObject CommentObject DateTimeObject LabelObject
-    LWPObject MD5Hex StoryState StoryType
+    ClientObject
+    CommentObject
+    DateTimeObject
+    DayOfWeek
+    IterationScope
+    LabelObject
+    LWPObject
+    MD5Hex
+    ProjectType
+    PTAPIObject
+    StoryState
+    StoryType
 );
 use Type::Utils -all;
 use Types::Common::Numeric;
@@ -32,6 +42,28 @@ class_type CommentObject, { class => 'WebService::PivotalTracker::Comment' };
 
 class_type DateTimeObject, { class => 'DateTime' };
 
+enum DayOfWeek, [
+    qw(
+        monday
+        tuesday
+        wednesday
+        thursday
+        friday
+        saturday
+        sunday
+        )
+];
+
+enum IterationScope, [
+    qw(
+        done
+        current
+        backlog
+        current_backlog
+        done_current
+        )
+];
+
 class_type LabelObject, { class => 'WebService::PivotalTracker::Label' };
 
 class_type LWPObject, { class => 'LWP::UserAgent' };
@@ -42,6 +74,17 @@ declare MD5Hex,
     inline_as {
     $_[0]->parent->inline_check( $_[1] ) . " && $_[1] =~ m/^[0-9a-f]{32}\$/i"
     };
+
+enum ProjectType, [
+    qw(
+        demo
+        private
+        public
+        shared
+        )
+];
+
+class_type PTAPIObject, { class => 'WebService::PivotalTracker' };
 
 enum StoryState, [
     qw(
