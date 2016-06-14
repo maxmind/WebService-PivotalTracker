@@ -47,6 +47,7 @@ on 'develop' => sub {
   requires "File::Spec" => "0";
   requires "IO::Handle" => "0";
   requires "IPC::Open3" => "0";
+  requires "JSON::MaybeXS" => "0";
   requires "Perl::Critic" => "1.123";
   requires "Perl::Tidy" => "20140711";
   requires "Test::CPAN::Changes" => "0.19";
@@ -55,7 +56,7 @@ on 'develop' => sub {
   requires "Test::More" => "0.88";
   requires "Test::NoTabs" => "0";
   requires "Test::Pod" => "1.41";
+  requires "Test::Portability::Files" => "0";
   requires "Test::Spelling" => "0.12";
-  requires "Test::Synopsis" => "0";
   requires "Test::Version" => "1";
 };
