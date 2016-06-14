@@ -25,7 +25,7 @@ has base_uri => (
     is      => 'ro',
     isa     => Uri,
     coerce  => 1,
-    default => 'https://www.pivotaltracker.com/services/v5/',
+    default => 'https://www.pivotaltracker.com/services/v5',
 );
 
 has _ua => (
