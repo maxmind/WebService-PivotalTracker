@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use DateTime::Format::RFC3339;
 use URI;
