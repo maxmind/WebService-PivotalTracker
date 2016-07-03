@@ -4,7 +4,7 @@ WebService::PivotalTracker - Perl library for the Pivotal Tracker REST API
 
 # VERSION
 
-version 0.04
+version 0.05
 
 # SYNOPSIS
 
