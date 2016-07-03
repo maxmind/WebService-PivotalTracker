@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Params::CheckCompiler was renamed to Params::ValidationCompiler. Updated
+  deps accordingly.
+
+
 0.04     2016-06-14
 
 - Fixed typo in attribute creation that caused compilation failures with

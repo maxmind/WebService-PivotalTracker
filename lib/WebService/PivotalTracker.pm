@@ -7,7 +7,7 @@ use namespace::autoclean;
 our $VERSION = '0.05';
 
 use DateTime::Format::RFC3339;
-use Params::CheckCompiler qw( compile );
+use Params::ValidationCompiler qw( compile );
 use Scalar::Util qw( blessed );
 use WebService::PivotalTracker::Client;
 use WebService::PivotalTracker::Me;
