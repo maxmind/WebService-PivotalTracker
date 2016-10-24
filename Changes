@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+- Allow access to Me's project summaries with project method
+
+
 0.05     2016-07-03
 
 - Params::CheckCompiler was renamed to Params::ValidationCompiler. Updated
