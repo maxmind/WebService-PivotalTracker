@@ -9,7 +9,7 @@ our $VERSION = '0.06';
 use Params::ValidationCompiler qw( compile );
 use WebService::PivotalTracker::PropertyAttributes;
 use WebService::PivotalTracker::Types
-    qw( ArrayRef Bool DateTimeObject NonEmptyStr PositiveInt );
+    qw( ArrayRef Bool DateTimeObject HashRef NonEmptyStr PositiveInt );
 
 use Moo;
 
@@ -32,6 +32,7 @@ has( @{$_} ) for props_to_attributes(
         inflator => '_inflate_iso8601_datetime',
     },
     kind => NonEmptyStr,
+    projects => HashRef,
 );
 
 with 'WebService::PivotalTracker::Entity';
