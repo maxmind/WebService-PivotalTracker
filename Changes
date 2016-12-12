@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Fixed usage of Params::ValidationCompiler. The previous version would not
+  compile with newer versions of this module due to incorrectly using a type
+  where a specification was expected.
+
+
 0.05     2016-07-03
 
 - Params::CheckCompiler was renamed to Params::ValidationCompiler. Updated

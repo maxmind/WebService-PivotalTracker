@@ -6,7 +6,7 @@ use namespace::autoclean;
 
 our $VERSION = '0.06';
 
-use Params::ValidationCompiler qw( compile );
+use Params::ValidationCompiler qw( validation_for );
 use WebService::PivotalTracker::Comment;
 use WebService::PivotalTracker::Label;
 use WebService::PivotalTracker::PropertyAttributes;
@@ -87,7 +87,7 @@ sub _properties {
 ## use critic
 
 {
-    my $check = compile(
+    my $check = validation_for(
         params => {
             current_state => { type => StoryState },
         }
@@ -107,7 +107,7 @@ sub _properties {
 }
 
 {
-    my $check = compile(
+    my $check = validation_for(
         params => {
             person_id => {
                 type     => PositiveInt,
@@ -168,7 +168,7 @@ before _clear_comments => sub {
 };
 
 {
-    my $check = compile(
+    my $check = validation_for(
         params => {
             name => { type => NonEmptyStr },
         }
