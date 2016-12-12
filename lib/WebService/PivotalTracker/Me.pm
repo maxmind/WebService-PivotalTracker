@@ -6,7 +6,6 @@ use namespace::autoclean;
 
 our $VERSION = '0.06';
 
-use Params::ValidationCompiler qw( compile );
 use WebService::PivotalTracker::PropertyAttributes;
 use WebService::PivotalTracker::Types
     qw( ArrayRef Bool DateTimeObject NonEmptyStr PositiveInt );

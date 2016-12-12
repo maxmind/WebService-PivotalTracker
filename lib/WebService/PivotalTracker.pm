@@ -7,7 +7,7 @@ use namespace::autoclean;
 our $VERSION = '0.06';
 
 use DateTime::Format::RFC3339;
-use Params::ValidationCompiler qw( compile );
+use Params::ValidationCompiler qw( validation_for );
 use Scalar::Util qw( blessed );
 use WebService::PivotalTracker::Client;
 use WebService::PivotalTracker::Me;
@@ -62,7 +62,7 @@ sub projects {
 }
 
 {
-    my $check = compile(
+    my $check = validation_for(
         params => {
             project_id => { type => PositiveInt },
             filter     => {
@@ -93,9 +93,9 @@ sub projects {
 }
 
 {
-    my $check = compile(
+    my $check = validation_for(
         params => {
-            story_id => PositiveInt,
+            story_id => { type => PositiveInt },
         }
     );
 
@@ -113,9 +113,9 @@ sub projects {
 }
 
 {
-    my $check = compile(
+    my $check = validation_for(
         params => {
-            project_id => PositiveInt,
+            project_id => { type => PositiveInt },
             label      => {
                 type     => NonEmptyStr,
                 optional => 1
@@ -188,7 +188,7 @@ sub projects {
         },
     );
 
-    my $check = compile(
+    my $check = validation_for(
         params => \%params,
     );
 
