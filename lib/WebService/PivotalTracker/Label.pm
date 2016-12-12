@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use WebService::PivotalTracker::PropertyAttributes;
 use WebService::PivotalTracker::Types
