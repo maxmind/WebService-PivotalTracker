@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Re-release with latest dzil bundle to fix documentation. Reported by Dave
+  Rolsky. GitHub #5.
+
+
 0.06     2016-12-12
 
 - Fixed usage of Params::ValidationCompiler. The previous version would not
