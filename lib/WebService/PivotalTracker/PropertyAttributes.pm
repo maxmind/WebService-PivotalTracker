@@ -70,3 +70,19 @@ EOF
 }
 
 1;
+
+# ABSTRACT: An internal tool; nothing to see here, move along
+
+__END__
+
+__END__
+
+=pod
+
+=head1 DESCRIPTION
+
+This package has no user-facing parts.
+
+=for Pod::Coverage *EVERYTHING*
+
+=cut
