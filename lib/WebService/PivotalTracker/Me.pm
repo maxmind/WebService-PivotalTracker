@@ -19,7 +19,7 @@ has( @{$_} ) for props_to_attributes(
     username                      => NonEmptyStr,
     time_zone                     => NonEmptyStr,
     api_token                     => NonEmptyStr,
-    has_google_identit            => Bool,
+    has_google_identity           => Bool,
     email                         => NonEmptyStr,
     receives_in_app_notifications => Bool,
     created_at                    => {
