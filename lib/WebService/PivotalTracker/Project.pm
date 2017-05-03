@@ -30,7 +30,7 @@ has( @{$_} ) for props_to_attributes(
     },
     time_zone                  => HashRef,
     velocity_averaged_over     => PositiveInt,
-    show_iterations_start_Time => {
+    show_iterations_start_time => {
         type     => DateTimeObject,
         inflator => '_inflate_iso8601_datetime',
     },
