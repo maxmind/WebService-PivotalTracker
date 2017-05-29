@@ -252,7 +252,7 @@ __END__
 
 =pod
 
-=for Pod::Coverage project_stories_where project_iterations
+=for Pod::Coverage project_iterations
 
 =head1 SYNOPSIS
 
