@@ -111,6 +111,6 @@ __END__
 
 This class has no user-facing parts.
 
-=for Pod::Coverage .*
+=for Pod::Coverage *EVERYTHING*
 
 =cut
