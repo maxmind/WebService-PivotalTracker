@@ -100,3 +100,17 @@ sub _make_request {
 }
 
 1;
+
+# ABSTRACT: The API client
+
+__END__
+
+=pod
+
+=head1 DESCRIPTION
+
+This class has no user-facing parts.
+
+=for Pod::Coverage *EVERYTHING*
+
+=cut

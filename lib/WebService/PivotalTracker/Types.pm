@@ -102,3 +102,17 @@ enum StoryState, [
 enum StoryType, [qw( feature bug chore release )];
 
 1;
+
+# ABSTRACT: Type definitions used in this distro
+
+__END__
+
+=pod
+
+=head1 DESCRIPTION
+
+This package has no user-facing parts.
+
+=for Pod::Coverage *EVERYTHING*
+
+=cut

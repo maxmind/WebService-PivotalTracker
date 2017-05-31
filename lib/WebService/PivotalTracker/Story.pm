@@ -242,3 +242,126 @@ sub _self_uri {
 }
 
 1;
+
+# ABSTRACT: A single story
+
+__END__
+
+=pod
+
+=head1 SYNOPSIS
+
+=for Test::Synopsis
+my $project;
+
+  my $iterations = $project->stories( ... );
+
+=head1 DESCRIPTION
+
+This class represents a single story.
+
+=head1 ATTRIBUTES
+
+This class provides the following attribute accessor methods. Each one
+corresponds to a property defined by the L<PT REST API V5 story resource
+docs|https://www.pivotaltracker.com/help/api/rest/v5#story_resource>.
+
+=head2 id
+
+=head2 project_id
+
+=head2 name
+
+=head2 description
+
+The description in Markdown.
+
+=head2 story_type
+
+=head2 current_state
+
+=head2 estimate
+
+=head2 accepted_at
+
+This will be returned as a L<DateTime> object.
+
+=head2 deadline
+
+This will be returned as a L<DateTime> object.
+
+=head2 requested_by_id
+
+=head2 owner_ids
+
+An array reference.
+
+=head2 task_ids
+
+An array reference.
+
+=head2 follower_ids
+
+An array reference.
+
+=head2 created_at
+
+This will be returned as a L<DateTime> object.
+
+=head2 updated_at
+
+This will be returned as a L<DateTime> object.
+
+=head2 url
+
+This will be returned as a L<URI> object.
+
+=head2 kind
+
+=head2 raw_content
+
+The raw JSON used to create this object.
+
+=head1 METHODS
+
+This class provides the following methods:
+
+=head2 $story->comments
+
+This method returns an array reference of
+L<WebService::PivotalTracker::Comment> objects.
+
+=head2 $story->labels
+
+This method returns an array reference of L<WebService::PivotalTracker::Label>
+objects.
+
+=head2 $story->update( ... )
+
+This method will update the story's properties as specified.
+
+=head2 $story->add_comment( ... )
+
+This method adds a comment to a story. It accepts two arguments:
+
+=over 4
+
+=item * text
+
+The text of the comment in Markdown.
+
+This is required.
+
+=item * person_id
+
+By default, the comment will be attributed to whoever owns the token, but you
+can use this to override that.
+
+=back
+
+=head2 $story->add_label( ... )
+
+This method accepts a single argument, C<name>, which is the name of the label
+to add.
+
+=cut

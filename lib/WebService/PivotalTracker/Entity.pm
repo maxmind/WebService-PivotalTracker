@@ -53,3 +53,17 @@ sub _refresh_raw_content {
 ## use critic
 
 1;
+
+# ABSTRACT: A shared role for all PT resources
+
+__END__
+
+=pod
+
+=head1 DESCRIPTION
+
+This role has no user-facing parts.
+
+=for Pod::Coverage .*
+
+=cut
