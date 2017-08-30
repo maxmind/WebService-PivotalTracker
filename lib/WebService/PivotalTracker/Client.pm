@@ -6,7 +6,7 @@ use namespace::autoclean;
 
 our $VERSION = '0.08';
 
-use Cpanel::JSON::XS qw( decode_json encode_json );
+use Cpanel::JSON::XS qw( encode_json );
 use HTTP::Request;
 use LWP::UserAgent;
 use URI;
@@ -80,7 +80,13 @@ sub _process_request {
             . $request->as_string;
     }
 
-    return decode_json( $response->content );
+    # The content we get back from PT has already been decoded into a UTF-8
+    # string internally. If we call decode_json then Cpanel::JSON::XS _may_
+    # try to decide it _again_, leading to breakage in some cases, notable
+    # characters in the 128-255 range. See GH
+    # https://github.com/maxmind/App-GHPT/issues/16 for an example.
+    my $json = Cpanel::JSON::XS->new;
+    return $json->decode( $response->content );
 }
 
 sub _make_request {
