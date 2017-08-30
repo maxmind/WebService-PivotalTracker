@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Fix handling of UTF-8 characters in the 128-255 in data coming back from
+  PT. These would end up being double-decoded, leading the dreaded �. GH #16
+  for App-GHPT.
+
+
 0.07     2017-02-08
 
 - Re-release with latest dzil bundle to fix documentation. Reported by Dave
