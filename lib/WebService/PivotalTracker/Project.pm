@@ -85,9 +85,8 @@ sub _self_uri {
 
     return $self->_client->build_uri(
         sprintf(
-            '/projects/%s/iterations/%s',
+            '/projects/%s',
             $self->id,
-            $self->number,
         )
     );
 }
