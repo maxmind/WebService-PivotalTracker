@@ -16,6 +16,7 @@ use Type::Library
     LabelObject
     LWPObject
     MD5Hex
+    PersonObject
     ProjectType
     PTAPIObject
     StoryState
@@ -74,6 +75,8 @@ declare MD5Hex,
     inline_as {
     $_[0]->parent->inline_check( $_[1] ) . " && $_[1] =~ m/^[0-9a-f]{32}\$/i"
     };
+
+class_type PersonObject, { class => 'WebService::PivotalTracker::Person' };
 
 enum ProjectType, [
     qw(

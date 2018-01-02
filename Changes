@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- The Story class now has a ->requested_by method that returns a
+  WebService::PivotalTracker::Person object.
+
+
 0.07     2017-02-08
 
 - Re-release with latest dzil bundle to fix documentation. Reported by Dave

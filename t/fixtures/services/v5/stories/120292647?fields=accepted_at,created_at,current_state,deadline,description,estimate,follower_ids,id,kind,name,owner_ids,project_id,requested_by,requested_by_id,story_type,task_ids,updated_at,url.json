@@ -17,6 +17,14 @@
    "name" : "Do a thing!",
    "owner_ids" : [],
    "project_id" : 557367,
+   "requested_by": {
+       "email": "vader@deathstar.mil",
+       "id": 101,
+       "initials": "DV",
+       "kind": "person",
+       "name": "Darth Vader",
+       "username": "vader"
+   },
    "requested_by_id" : 670657,
    "story_type" : "feature",
    "updated_at" : "2016-05-25T16:10:06Z",
