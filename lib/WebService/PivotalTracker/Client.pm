@@ -80,7 +80,24 @@ sub _process_request {
             . $request->as_string;
     }
 
-    return decode_json( $response->content );
+    my $content = decode_json( $response->content );
+    return $content unless wantarray;
+
+    return ($content, $self->_pt_headers($response));
+}
+
+sub _pt_headers {
+    my $self     = shift;
+    my $response = shift;
+
+    my %h;
+    for my $name ( grep {/^X-Tracker-/i} $response->header_field_names ) {
+        ( my $short = lc $name ) =~ s/X-Tracker-//i;
+        $short =~ s/-/_/g;
+        $h{$short} = $response->get($name);
+    }
+
+    return \%h;
 }
 
 sub _make_request {

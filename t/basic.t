@@ -22,7 +22,7 @@ is(
 );
 
 isa_ok(
-    $pt->_client,
+    $pt->client,
     'WebService::PivotalTracker::Client',
 );
 

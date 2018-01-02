@@ -10,6 +10,7 @@ use DateTime::Format::RFC3339;
 use Params::ValidationCompiler qw( validation_for );
 use Scalar::Util qw( blessed );
 use WebService::PivotalTracker::Client;
+use WebService::PivotalTracker::Iterator;
 use WebService::PivotalTracker::Me;
 use WebService::PivotalTracker::Project;
 use WebService::PivotalTracker::ProjectIteration;
@@ -39,7 +40,7 @@ has _ua => (
     predicate => '_has_ua',
 );
 
-has _client => (
+has client => (
     is      => 'ro',
     isa     => ClientObject,
     lazy    => 1,
@@ -49,7 +50,7 @@ has _client => (
 sub projects {
     my $self = shift;
 
-    my $uri = $self->_client->build_uri('/projects');
+    my $uri = $self->client->build_uri('/projects');
 
     return [
         map {
@@ -57,7 +58,7 @@ sub projects {
                 raw_content => $_,
                 pt_api      => $self,
                 )
-        } @{ $self->_client->get($uri) }
+        } @{ $self->client->get($uri) }
     ];
 }
 
@@ -76,20 +77,32 @@ sub projects {
         my $self = shift;
         my %args = $check->(@_);
 
-        my $uri = $self->_client->build_uri(
+        my $uri = $self->client->build_uri(
             "/projects/$args{project_id}/stories",
             \%args,
         );
 
-        return [
-            map {
-                WebService::PivotalTracker::Story->new(
-                    raw_content => $_,
-                    pt_api      => $self,
-                    )
-            } @{ $self->_client->get($uri) }
-        ];
+        return $self->_iterator_for(
+            'WebService::PivotalTracker::Story',
+            'get',
+            $uri
+        );
     }
+}
+
+sub _iterator_for {
+    my $self  = shift;
+    my $class = shift;
+    my $uri   = shift;
+
+    my ( $content, $pt_headers ) = $self->client->get($uri);
+    return WebService::PivotalTracker::Iterator->new(
+        pt_api     => $self,
+        uri        => $uri,
+        class      => $class,
+        content    => $content,
+        pt_headers => $pt_headers,
+    );
 }
 
 {
@@ -139,7 +152,7 @@ sub projects {
         my $self = shift;
         my %args = $check->(@_);
 
-        my $uri = $self->_client->build_uri(
+        my $uri = $self->client->build_uri(
             "/projects/$args{project_id}/iterations",
             \%args,
         );
@@ -150,7 +163,7 @@ sub projects {
                     raw_content => $_,
                     pt_api      => $self,
                     )
-            } @{ $self->_client->get($uri) }
+            } @{ $self->client->get($uri) }
         ];
     }
 }
@@ -199,8 +212,8 @@ sub projects {
         $self->_deflate_datetime_values( \%args );
 
         my $project_id  = delete $args{project_id};
-        my $raw_content = $self->_client->post(
-            $self->_client->build_uri("/projects/$project_id/stories"),
+        my $raw_content = $self->client->post(
+            $self->client->build_uri("/projects/$project_id/stories"),
             \%args,
         );
 
@@ -216,7 +229,7 @@ sub me {
 
     return WebService::PivotalTracker::Me->new(
         raw_content =>
-            $self->_client->get( $self->_client->build_uri('/me') ),
+            $self->client->get( $self->client->build_uri('/me') ),
         pt_api => $self,
     );
 }
