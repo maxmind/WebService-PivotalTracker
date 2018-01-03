@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.08     2018-01-03
+
 - The Story class now has a ->requested_by method that returns a
   WebService::PivotalTracker::Person object.
 
