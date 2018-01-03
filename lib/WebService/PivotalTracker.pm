@@ -99,15 +99,26 @@ sub projects {
         }
     );
 
+    # This is gross. Is there a better way to manage this? This is the only
+    # way to get the Person who is the requester. There is no person endpoint
+    # from which to retrieve this information later!
+    my $story_fields = do {
+        ## no critic (Subroutines::ProtectPrivateSubs)
+        my %props = WebService::PivotalTracker::Story->_properties;
+        join ',', sort ( keys %props, 'requested_by' );
+    };
+
     sub story {
         my $self = shift;
         my %args = $check->(@_);
 
+        my $content = $self->_client->get(
+            $self->_client->build_uri(
+                "/stories/$args{story_id}?fields=$story_fields"),
+        );
         WebService::PivotalTracker::Story->new(
-            raw_content => $self->_client->get(
-                $self->_client->build_uri("/stories/$args{story_id}"),
-            ),
-            pt_api => $self,
+            raw_content => $content,
+            pt_api      => $self,
         );
     }
 }

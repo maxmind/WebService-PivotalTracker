@@ -9,10 +9,11 @@ our $VERSION = '0.08';
 use Params::ValidationCompiler qw( validation_for );
 use WebService::PivotalTracker::Comment;
 use WebService::PivotalTracker::Label;
+use WebService::PivotalTracker::Person;
 use WebService::PivotalTracker::PropertyAttributes;
 use WebService::PivotalTracker::Types qw(
     ArrayRef CommentObject DateTimeObject LabelObject Maybe
-    NonEmptyStr Num PositiveInt Str StoryState StoryType Uri
+    NonEmptyStr Num PersonObject PositiveInt Str StoryState StoryType Uri
 );
 
 use Moo;
@@ -76,6 +77,19 @@ has labels => (
     lazy     => 1,
     builder  => '_build_labels',
     clearer  => '_clear_labels',
+);
+
+has requested_by => (
+    is      => 'ro',
+    isa     => PersonObject,
+    lazy    => 1,
+    default => sub {
+        my $self = shift;
+        WebService::PivotalTracker::Person->new(
+            raw_content => $self->raw_content->{requested_by},
+            pt_api      => $self->_pt_api,
+        );
+    },
 );
 
 with 'WebService::PivotalTracker::Entity';
@@ -335,6 +349,11 @@ L<WebService::PivotalTracker::Comment> objects.
 
 This method returns an array reference of L<WebService::PivotalTracker::Label>
 objects.
+
+=head2 $story->requested_by
+
+This method returns a L<WebService::PivotalTracker::Person> representing the
+person who is the requester for the story.
 
 =head2 $story->update( ... )
 

@@ -9,6 +9,7 @@ language: perl
 perl:
   - blead
   - dev
+  - '5.26'
   - '5.24'
   - '5.22'
   - '5.20'
@@ -17,19 +18,22 @@ perl:
   - '5.14'
   - '5.12'
   - '5.10'
+cache:
+  directories:
+    - $HOME/perl5
 matrix:
   allow_failures:
     - perl: blead
   include:
     - env: COVERAGE=1
-      perl: '5.24'
+      perl: '5.26'
 env:
   global:
-    - RELEASE_TESTING=1
     - AUTHOR_TESTING=1
+    - RELEASE_TESTING=1
 before_install:
   - git submodule update --init --recursive
-  - eval $(curl https://travis-perl.github.io/init) --auto
+  - eval $(curl https://travis-perl.github.io/init) --auto --always-upgrade-modules
 notifications:
   email:
     on_failure: always
@@ -39,3 +43,9 @@ notifications:
   slack:
     rooms:
       secure: "Ie3AovDHNVDgfg+UBRnrBV9OVuwlNrq/3DBRjCixoDOokkzy9T817PvKkYOQrCiyKa5p1BAlkrvpNxLInH6Y2kKm4anvqWRI3XgQFlZRLxy0zhJv0oUnu+oaPyFVZk+4eGCl5+uuXLclE/5RoJqW2fRRhnBRP/g64KBt84KlmU8=\n"
+### __app_cisetup__
+# ---
+# force_threaded_perls: 0
+# perl_caching: 1
+
+### __app_cisetup__
