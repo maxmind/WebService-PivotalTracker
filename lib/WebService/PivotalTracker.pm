@@ -46,6 +46,15 @@ has _client => (
     builder => '_build_client',
 );
 
+# This is gross. Is there a better way to manage this? This is the only way to
+# get the Person who is the requester. There is no person endpoint from which
+# to retrieve this information later!
+my $StoryFields = do {
+    ## no critic (Subroutines::ProtectPrivateSubs)
+    my %props = WebService::PivotalTracker::Story->_properties;
+    join ',', sort ( keys %props, 'requested_by' );
+};
+
 sub projects {
     my $self = shift;
 
@@ -77,8 +86,11 @@ sub projects {
         my %args = $check->(@_);
 
         my $uri = $self->_client->build_uri(
-            "/projects/$args{project_id}/stories",
-            \%args,
+            "/projects/$args{project_id}/stories?",
+            {
+                %args,
+                fields => $StoryFields,
+            },
         );
 
         return [
@@ -99,22 +111,15 @@ sub projects {
         }
     );
 
-    # This is gross. Is there a better way to manage this? This is the only
-    # way to get the Person who is the requester. There is no person endpoint
-    # from which to retrieve this information later!
-    my $story_fields = do {
-        ## no critic (Subroutines::ProtectPrivateSubs)
-        my %props = WebService::PivotalTracker::Story->_properties;
-        join ',', sort ( keys %props, 'requested_by' );
-    };
-
     sub story {
         my $self = shift;
         my %args = $check->(@_);
 
         my $content = $self->_client->get(
             $self->_client->build_uri(
-                "/stories/$args{story_id}?fields=$story_fields"),
+                "/stories/$args{story_id}",
+                { fields => $StoryFields }
+            ),
         );
         WebService::PivotalTracker::Story->new(
             raw_content => $content,

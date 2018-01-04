@@ -1,5 +1,11 @@
 {{$NEXT}}
 
+- Make sure all queries that retrieve one or more stories get the requested_by
+  field. Calling $story->requested_by on a story that was retrieved via the
+  ->project_stories_where method would fail because this wasn't being done. It
+  only worked for a story retrieved with the ->story method.
+
+
 0.09     2018-01-04
 
 - Fixed a filename in the test fixtures that was too long for Windows. The
