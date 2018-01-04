@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Fixed a filename in the test fixtures that was too long for Windows. The
+  distribution could not be untarred on Windows at all.
+
+
 0.08     2018-01-03
 
 - The Story class now has a ->requested_by method that returns a
