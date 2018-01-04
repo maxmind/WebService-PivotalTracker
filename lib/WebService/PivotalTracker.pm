@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use DateTime::Format::RFC3339;
 use Params::ValidationCompiler qw( validation_for );
