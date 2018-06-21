@@ -13,7 +13,7 @@ use WebService::PivotalTracker::Client;
 use WebService::PivotalTracker::Me;
 use WebService::PivotalTracker::Project;
 use WebService::PivotalTracker::ProjectIteration;
-use WebService::PivotalTracker::ProjectMembership ();
+use WebService::PivotalTracker::ProjectMembership;
 use WebService::PivotalTracker::Story;
 use WebService::PivotalTracker::Types
     qw( ArrayRef ClientObject IterationScope LWPObject MD5Hex NonEmptyStr PositiveInt Uri );
