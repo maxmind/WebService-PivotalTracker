@@ -116,11 +116,12 @@ sub _iterator_for {
         my $self = shift;
         my %args = $check->(@_);
 
+        my $content = $self->client->get(
+            $self->client->build_uri("/stories/$args{story_id}"),
+        );
         WebService::PivotalTracker::Story->new(
-            raw_content => $self->_client->get(
-                $self->_client->build_uri("/stories/$args{story_id}"),
-            ),
-            pt_api => $self,
+            raw_content => $content,
+            pt_api      => $self,
         );
     }
 }
