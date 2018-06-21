@@ -62,6 +62,15 @@ has( @{$_} ) for props_to_attributes(
 
 with 'WebService::PivotalTracker::Entity';
 
+sub memberships {
+    my $self = shift;
+
+    return $self->_pt_api->project_memberships(
+        @_,
+        project_id => $self->id,
+    );
+}
+
 sub stories {
     my $self = shift;
 
@@ -191,6 +200,12 @@ The raw JSON used to create this object.
 =head1 METHODS
 
 This class provides the following methods:
+
+=head2 $project->memberships(...)
+
+This method returns an array reference of
+L<WebService::PivotalTracker::ProjectMembership> objects, one for each member
+of the project.
 
 =head2 $project->stories(...)
 

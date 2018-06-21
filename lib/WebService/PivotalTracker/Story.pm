@@ -37,11 +37,11 @@ my %props = (
     requested_by_id => PositiveInt,
     owner_ids       => ArrayRef [PositiveInt],
     task_ids        => {
-        type => ArrayRef [PositiveInt],
+        type    => ArrayRef [PositiveInt],
         default => sub { [] },
     },
     follower_ids => {
-        type => ArrayRef [PositiveInt],
+        type    => ArrayRef [PositiveInt],
         default => sub { [] },
     },
     created_at => {
