@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+- Add the ability to look up project memberships.
+
+
 0.10     2018-01-04
 
 - Make sure all queries that retrieve one or more stories get the requested_by
