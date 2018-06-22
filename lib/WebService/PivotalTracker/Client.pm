@@ -8,6 +8,7 @@ our $VERSION = '0.11';
 
 use Cpanel::JSON::XS qw( decode_json encode_json );
 use HTTP::Request;
+use LWP::Protocol::https;
 use LWP::UserAgent;
 use URI;
 use WebService::PivotalTracker::Types qw( LWPObject MD5Hex Uri );
