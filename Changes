@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.11     2018-06-21
+
 - Add the ability to look up project memberships.
 
 - Make sure that LWP::Protocol::https is listed as an explicit dependency. The
