@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 use Cpanel::JSON::XS qw( decode_json encode_json );
 use HTTP::Request;
