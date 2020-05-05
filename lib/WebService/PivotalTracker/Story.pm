@@ -159,7 +159,7 @@ sub _build_comments {
             WebService::PivotalTracker::Comment->new(
                 raw_content => $_,
                 pt_api      => $self->_pt_api,
-                )
+            )
         } @{$raw_comments}
     ];
 }
@@ -215,7 +215,7 @@ sub _build_labels {
                 WebService::PivotalTracker::Label->new(
                     raw_content => $_,
                     pt_api      => $self->_pt_api,
-                    )
+                )
             } @{ $self->raw_content->{labels} }
         ];
     }
@@ -227,7 +227,7 @@ sub _build_labels {
             WebService::PivotalTracker::Label->new(
                 raw_content => $_,
                 pt_api      => $self->_pt_api,
-                )
+            )
         } @{$raw_labels}
     ];
 }
