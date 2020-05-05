@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+- You may now use a token object that stringifies to the actual token.
+
+
 0.11     2018-06-21
 
 - Add the ability to look up project memberships.

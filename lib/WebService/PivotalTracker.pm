@@ -346,7 +346,8 @@ This creates a new object of this class. It accepts the following arguments:
 
 =item * token
 
-An MD5 access token for Pivotal Tracker.
+An MD5 access token for Pivotal Tracker. May be provided as a string or
+something that stringifies to the token.
 
 This is required.
 
