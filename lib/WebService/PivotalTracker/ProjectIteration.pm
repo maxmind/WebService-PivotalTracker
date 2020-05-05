@@ -38,7 +38,7 @@ sub stories {
             WebService::PivotalTracker::Story->new(
                 raw_content => $_,
                 pt_api      => $self->_pt_api,
-                )
+            )
         } @{ $self->raw_content->{stories} }
     ];
 }

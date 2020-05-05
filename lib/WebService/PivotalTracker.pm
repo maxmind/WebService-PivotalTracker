@@ -66,7 +66,7 @@ sub projects {
             WebService::PivotalTracker::Project->new(
                 raw_content => $_,
                 pt_api      => $self,
-                )
+            )
         } @{ $self->_client->get($uri) }
     ];
 }
@@ -99,7 +99,7 @@ sub projects {
                 WebService::PivotalTracker::Story->new(
                     raw_content => $_,
                     pt_api      => $self,
-                    )
+                )
             } @{ $self->_client->get($uri) }
         ];
     }
@@ -155,7 +155,7 @@ sub projects {
                 WebService::PivotalTracker::ProjectMembership->new(
                     raw_content => $_,
                     pt_api      => $self,
-                    )
+                )
             } @{ $self->_client->get($uri) }
         ];
     }
@@ -198,7 +198,7 @@ sub projects {
                 WebService::PivotalTracker::ProjectIteration->new(
                     raw_content => $_,
                     pt_api      => $self,
-                    )
+                )
             } @{ $self->_client->get($uri) }
         ];
     }
@@ -232,7 +232,7 @@ sub projects {
             optional => 1,
         },
         labels => {
-            type => ArrayRef [NonEmptyStr],
+            type     => ArrayRef [NonEmptyStr],
             optional => 1
         },
     );

@@ -28,8 +28,8 @@ has( @{$_} ) for props_to_attributes(
     },
     file_attachment_ids   => ArrayRef [PositiveInt],
     google_attachment_ids => ArrayRef [PositiveInt],
-    commit_identifier     => Maybe    [NonEmptyStr],
-    commit_type           => Maybe    [NonEmptyStr],
+    commit_identifier     => Maybe [NonEmptyStr],
+    commit_type           => Maybe [NonEmptyStr],
     kind                  => NonEmptyStr,
 );
 
