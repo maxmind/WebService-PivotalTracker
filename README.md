@@ -4,7 +4,7 @@ WebService::PivotalTracker - Perl library for the Pivotal Tracker REST API
 
 # VERSION
 
-version 0.12
+version 0.13
 
 # SYNOPSIS
 
@@ -144,7 +144,7 @@ Dave Rolsky <autarch@urth.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2016 - 2020 by MaxMind, Inc.
+This software is Copyright (c) 2016 - 2021 by MaxMind, Inc.
 
 This is free software, licensed under:
 
