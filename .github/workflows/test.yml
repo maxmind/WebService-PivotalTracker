@@ -34,4 +34,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl-version }}
           install-modules-with: cpm
+      # This should be installed transitively, but that is not happening for
+      # all builds.
+      - run: cpm install DateTime
       - run: prove -lv t
